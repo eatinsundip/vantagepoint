@@ -1,4 +1,4 @@
-# vantagepoint
+# VantagePoint
 Attack Surface Scanner with the main focus being discover and enumeration.
 
 Main goal is to make this work very easily on any linux.
