@@ -11,10 +11,16 @@ A container would be cool but that is something else I would need to learn adn I
 
 
 ## Initial Apex Domain Discovery Techniques
+
 https://www.reversewhois.io
+
 https://bgp.he.net
+
 https://dnschecker.org
+
 https://github.com/TheArqsz/tenant-domains
+
+https://whoxy.com
 
 ### Automated Shodan
 https://github.com/Dheerajmadhukar/karma_v2
