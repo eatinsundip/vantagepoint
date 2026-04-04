@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import String, Integer, DateTime, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -12,7 +12,7 @@ class Project(Base):
     name: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     discord_webhook_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     scan_schedule: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     scope: Mapped[list["Scope"]] = relationship(
         back_populates="project", cascade="all, delete-orphan"
@@ -43,7 +43,7 @@ class ScanRun(Base):
     status: Mapped[str] = mapped_column(String, default="running")
     triggered_by: Mapped[str] = mapped_column(String, default="manual")
     error_message: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    started_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     finished_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
     project: Mapped["Project"] = relationship(back_populates="scan_runs")
@@ -58,8 +58,8 @@ class Finding(Base):
     scan_run_id: Mapped[int] = mapped_column(ForeignKey("scan_runs.id"), nullable=False)
     type: Mapped[str] = mapped_column(String, nullable=False)
     value: Mapped[str] = mapped_column(String, nullable=False)
-    first_seen_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    last_seen_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    first_seen_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    last_seen_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     project: Mapped["Project"] = relationship(back_populates="findings")
     scan_run: Mapped["ScanRun"] = relationship(back_populates="findings")
