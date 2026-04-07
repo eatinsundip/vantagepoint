@@ -173,12 +173,14 @@ Single org for self-hosted. Multiple orgs for SaaS multi-tenancy.
 
 Runs before the main scan pipeline. Input: company name + optional seed domains.
 
-| Source | Tool / API | Cost |
-|---|---|---|
-| Reverse WHOIS | whoxy.com API | API key required |
-| ASN / BGP | ARIN + RIPE REST APIs | Free |
-| Certificate transparency | crt.sh API | Free |
-| Tenant domains | tenant-domains (Go tool) | Free |
+| Source | Tool / API | Cost | Required |
+|---|---|---|---|
+| Reverse WHOIS | whoxy.com API | ~$2/500 queries | Optional — skipped if no key configured |
+| ASN / BGP | ARIN + RIPE REST APIs | Free | Always runs |
+| Certificate transparency | crt.sh API | Free | Always runs |
+| Tenant domains | tenant-domains (Go tool) | Free | Always runs |
+
+If a whoxy API key is not configured for the org, the reverse WHOIS discovery source is silently skipped and the remaining sources still run. The discovery review UI indicates which sources contributed results.
 
 **Discovery workflow:**
 1. User creates project with company name + optional seeds
